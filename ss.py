@@ -2,7 +2,7 @@ import numpy as np
 import pickle
 import streamlit as st
 import pandas as pd
-from sklearn import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 
