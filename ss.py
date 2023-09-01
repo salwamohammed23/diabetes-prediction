@@ -7,7 +7,7 @@ from sklearn import svm
 from sklearn.metrics import accuracy_score
 
 # loading the diabetes dataset to a pandas DataFrame
-diabetes_dataset = pd.read_csv('C:\Users\سلوىمحمدعبداللطيفمحم\Documents\GitHub\diabetes_prediction/diabetes.csv')
+diabetes_dataset = pd.read_csv('diabetes.csv')
 # printing the first 5 rows of the dataset
 diabetes_dataset.head()
 
@@ -25,8 +25,8 @@ X_test_prediction = classifier.predict(X_test)
 test_data_accuracy = accuracy_score(X_test_prediction, Y_test)
 
 # Saving the trained model
-filename = 'trained_model.sav'
-pickle.dump(classifier, open(filename, 'wb'))
+#filename = 'trained_model.sav'
+#pickle.dump(classifier, open(filename, 'wb'))
 
 # Loading the saved model
 loaded_model = pickle.load(open('trained_model.sav', 'rb'))
