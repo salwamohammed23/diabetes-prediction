@@ -1,9 +1,33 @@
 import numpy as np
 import pickle
 import streamlit as st
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn import svm
+from sklearn.metrics import accuracy_score
+
+# loading the diabetes dataset to a pandas DataFrame
+diabetes_dataset = pd.read_csv('Downloads/diabetes.csv')
+# printing the first 5 rows of the dataset
+diabetes_dataset.head()
+# separating the data and labels
+X = diabetes_dataset.drop(columns = 'Outcome', axis=1)
+Y = diabetes_dataset['Outcome']
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size = 0.2, stratify=Y, random_state=2)
+classifier = svm.SVC(kernel='linear')
+#training the support vector Machine Classifier
+classifier.fit(X_train, Y_train)
+# accuracy score on the test data
+X_test_prediction = classifier.predict(X_test)
+test_data_accuracy = accuracy_score(X_test_prediction, Y_test)
+print('Accuracy score of the test data : ', test_data_accuracy)
+filename = 'trained_model.sav'
+pickle.dump(classifier, open(filename, 'wb'))
+# loading the saved model
+loaded_model = pickle.load(open('trained_model.sav', 'rb'))
 
 # loading the saved model
-loaded_model = pickle.load(open('E:/streamlit/trained_model.sav', 'rb'))
+#loaded_model = pickle.load(open('E:/streamlit/trained_model.sav', 'rb'))
 
 # creating a function for prediction
 def diabetes_prediction(input_data):
