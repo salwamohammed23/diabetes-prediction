@@ -1,0 +1,46 @@
+import numpy as np
+import pickle
+import streamlit as st
+
+# loading the saved model
+loaded_model = pickle.load(open('E:/streamlit/trained_model.sav', 'rb'))
+
+# creating a function for prediction
+def diabetes_prediction(input_data):
+    # changing the input_data to numpy array
+    input_data_as_numpy_array = np.asarray(input_data)
+
+    # reshape the array as we are predicting for one instance
+    input_data_reshaped = input_data_as_numpy_array.reshape(1, -1)
+
+    prediction = loaded_model.predict(input_data_reshaped)
+
+    if prediction[0] == 0:
+        return 'The person is not diabetic'
+    else:
+        return 'The person is diabetic'
+
+def main():
+    # giving title
+    st.title('Diabetes Prediction App')
+    # getting the input data
+    Pregnancies = st.text_input('No. of Pregnancies')
+    Glucose = st.text_input('No. of Glucose')
+    BloodPressure = st.text_input('No. of Blood Pressure')
+    SkinThickness = st.text_input('No. of Skin Thickness')
+    Insulin = st.text_input('No. of Insulin')
+    BMI = st.text_input('No. of BMI')
+    DiabetesPedigreeFunction = st.text_input('No. of Diabetes Pedigree Function')
+   
+    Age = st.text_input('No. of Age')
+
+    # code for prediction
+    diagnosis = ""
+    if st.button('Diabetes test result'):
+        diagnosis = diabetes_prediction([Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI,
+                                         DiabetesPedigreeFunction, Age])
+
+    st.success(diagnosis)
+
+if __name__ == '__main__':
+    main()
